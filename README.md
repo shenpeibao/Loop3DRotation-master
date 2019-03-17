@@ -6,7 +6,7 @@
 ## 效果图
 
 
-![avatar](https://github.com/shenpeibao/Loop3DRotation-master/image/shot1)
+![avatar](https://github.com/shenpeibao/Loop3DRotation-master/blob/master/image/shot1.jpg)
 ![avatar](https://github.com/shenpeibao/Loop3DRotation-master/image/shot2)
 
 ##优势
