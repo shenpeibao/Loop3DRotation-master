@@ -1,11 +1,11 @@
 #介绍
-1: LoopRotarySwitchView
+1: Loop3DRotation
     可以无限循环，自动旋转，停靠的3D旋转布局控件,无需编写代码，直接在布局中加入自己的布局即可。
     控件继承相对布局RelativeLayout直接可以当做布局使用。
 
 ## 效果图
 
-![image](https://github.com/dalong982242260/LoopRotarySwitch/blob/master/img/dalong.gif)
+![image]()
 
 ##优势
     *1.3d旋转RelativeLayout 
@@ -25,17 +25,7 @@
 或者直接引入库文件
 
  
-## 1.0.2版本
-     1、增加方向设置.
-  
-## 1.0.1版本
-     1、优化代码。
-     2、增加自动旋转方向设置
- 
-## 1.0.0版本
-     1、支持3d旋转。
-     2、支持自定义旋转。
-     3、点击3d切换，触摸滑动3d切换
+
  
 ## 配置view 
 
