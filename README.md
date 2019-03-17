@@ -4,7 +4,7 @@
     控件继承相对布局RelativeLayout直接可以当做布局使用。
 
 ## 效果图
-![avatar](https://github.com/shenpeibao/Loop3DRotation-master/blob/master/image/shot1.jpg)
+![image](https://github.com/shenpeibao/Loop3DRotation-master/blob/master/image/shot1.jpg)
 ##优势
     *1.3d旋转RelativeLayout 
     *2.支持自动旋转
