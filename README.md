@@ -5,8 +5,8 @@
 
 ## 效果图
 
-![image](https://github.com/shenpeibao/Loop3DRotation-master/tree/master/image/shot1)
-![image](https://github.com/shenpeibao/Loop3DRotation-master/tree/master/image/shot2)
+![image](https://github.com/shenpeibao/Loop3DRotation-master/image/shot1)
+![image](https://github.com/shenpeibao/Loop3DRotation-master/image/shot2)
 
 ##优势
     *1.3d旋转RelativeLayout 
@@ -20,6 +20,8 @@
 
 
 在你的项目Gradle 直接引入库文件
+
+
  implementation project(':loopplay')
  
 
