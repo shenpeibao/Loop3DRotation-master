@@ -1,4 +1,4 @@
-package com.example.looprotaryswitch;
+package com.example.loopswitch;
 
 import org.junit.Test;
 

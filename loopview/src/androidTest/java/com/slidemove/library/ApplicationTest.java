@@ -1,4 +1,4 @@
-package com.example.looprotaryswitch;
+package com.slidemove.library;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

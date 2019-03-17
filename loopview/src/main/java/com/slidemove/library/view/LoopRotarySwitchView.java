@@ -1,7 +1,8 @@
-package com.dalong.library.view;
+package com.slidemove.library.view;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -11,10 +12,10 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
-import com.dalong.library.R;
-import com.dalong.library.listener.OnItemClickListener;
-import com.dalong.library.listener.OnItemSelectedListener;
-import com.dalong.library.listener.OnLoopViewTouchListener;
+import com.slidemove.library.R;
+import com.slidemove.library.listener.OnItemClickListener;
+import com.slidemove.library.listener.OnItemSelectedListener;
+import com.slidemove.library.listener.OnLoopViewTouchListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,13 +28,13 @@ import java.util.ListIterator;
  */
 public class LoopRotarySwitchView extends RelativeLayout {
 
-    private final static  int LoopR = 200;
+    private final static int LoopR = 200;
 
-    private final static  int  vertical=0;//竖直
+    private final static int vertical = 0;//竖直
 
-    private final static  int  horizontal=1;//水平
+    private final static int horizontal = 1;//水平
 
-    private  int mOrientation=horizontal;//方向
+    private int mOrientation = horizontal;//方向
 
     private Context mContext;//上下文
 
@@ -41,11 +42,11 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private ValueAnimator rAnimation = null;//半径动画
 
-    private ValueAnimator zAnimation=null;
+    private ValueAnimator zAnimation = null;
 
-    private ValueAnimator xAnimation=null;
+    private ValueAnimator xAnimation = null;
 
-    private int loopRotationX =0, loopRotationZ =0;//x轴旋转和轴旋转，y轴无效果
+    private int loopRotationX = 0, loopRotationZ = 0;//x轴旋转和轴旋转，y轴无效果
 
     private GestureDetector mGestureDetector = null;//手势类
 
@@ -59,9 +60,9 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private float distance = multiple * r;//camera和观察的旋转物体距离， 距离越长,最大物体和最小物体比例越不明显
 
-    private float angle = 0;	//旋转的角度
+    private float angle = 0;    //旋转的角度
 
-    private float last_angle = 0;	//最后的角度，用来记录上一次取消touch之后的角度
+    private float last_angle = 0;    //最后的角度，用来记录上一次取消touch之后的角度
 
     private boolean autoRotation = false;//自动旋转
 
@@ -77,22 +78,23 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     private OnItemClickListener onItemClickListener = null;//被点击的回调
 
-    private boolean isCanClickListener=true;//是否可以点击回调
+    private boolean isCanClickListener = true;//是否可以点击回调
 
     private float x;//移动的x是否符合回调点击事件
 
-    private float limitX=30;//滑动倒最低30
+    private float limitX = 30;//滑动倒最低30
 
-    public enum AutoScrollDirection{
-        left,right
+    public enum AutoScrollDirection {
+        left, right
     }
+
     /**
      * 构造方法
      *
      * @param context
      */
     public LoopRotarySwitchView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     /**
@@ -102,7 +104,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param attrs
      */
     public LoopRotarySwitchView(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     /**
@@ -115,22 +117,22 @@ public class LoopRotarySwitchView extends RelativeLayout {
     public LoopRotarySwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
-        TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.LoopRotarySwitchView);
-        mOrientation=typedArray.getInt(R.styleable.LoopRotarySwitchView_orientation,horizontal);
-        autoRotation=typedArray.getBoolean(R.styleable.LoopRotarySwitchView_autoRotation,false);
-        r=typedArray.getDimension(R.styleable.LoopRotarySwitchView_r,LoopR);
-        int direction=typedArray.getInt(R.styleable.LoopRotarySwitchView_direction,0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LoopRotarySwitchView);
+        mOrientation = typedArray.getInt(R.styleable.LoopRotarySwitchView_orientation, horizontal);
+        autoRotation = typedArray.getBoolean(R.styleable.LoopRotarySwitchView_autoRotation, false);
+        r = typedArray.getDimension(R.styleable.LoopRotarySwitchView_r, LoopR);
+        int direction = typedArray.getInt(R.styleable.LoopRotarySwitchView_direction, 0);
         typedArray.recycle();
         mGestureDetector = new GestureDetector(context, getGeomeryController());
-        if(mOrientation==horizontal){//如果是水平 z值为0  如果是竖直z值为90
-            loopRotationZ=0;
-        }else{
-            loopRotationZ=90;
+        if (mOrientation == horizontal) {//如果是水平 z值为0  如果是竖直z值为90
+            loopRotationZ = 0;
+        } else {
+            loopRotationZ = 90;
         }
-        if(direction==0){//设置自定滚动的方向
-            autoRotatinDirection=AutoScrollDirection.left;
-        }else{
-            autoRotatinDirection=AutoScrollDirection.right;
+        if (direction == 0) {//设置自定滚动的方向
+            autoRotatinDirection = AutoScrollDirection.left;
+        } else {
+            autoRotatinDirection = AutoScrollDirection.right;
         }
         loopHandler.setLoop(autoRotation);
 
@@ -139,25 +141,25 @@ public class LoopRotarySwitchView extends RelativeLayout {
     /**
      * handler处理
      */
+    @SuppressLint("HandlerLeak")
     LoopRotarySwitchViewHandler loopHandler = new LoopRotarySwitchViewHandler(3000) {
         @Override
         public void doScroll() {
             try {
                 if (size != 0) {//判断自动滑动从那边开始
                     int perAngle = 0;
-                    switch (autoRotatinDirection)
-                    {
+                    switch (autoRotatinDirection) {
                         case left:
-                            perAngle = 360 /size;
+                            perAngle = 360 / size;
                             break;
                         case right:
-                            perAngle = -360/size;
+                            perAngle = -360 / size;
                             break;
                     }
                     if (angle == 360) {
                         angle = 0f;
                     }
-                    AnimRotationTo(angle + perAngle, null);
+                    animRotationTo(angle + perAngle, null);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -167,7 +169,8 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     /**
      * 排序
-     * 對子View 排序，然后根据变化选中是否重绘,这样是为了实现view 在显示的时候来控制当前要显示的是哪三个view，可以改变排序看下效果
+     * 对子View 排序，然后根据变化选中是否重绘,这样是为了实现view 在显示的时候来控制当前要显示的是哪三个view，可以改变排序看下效果
+     *
      * @param list
      */
     @SuppressWarnings("unchecked")
@@ -188,6 +191,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
             list.get(j).bringToFront();
         }
     }
+
     /**
      * 筛选器
      */
@@ -212,8 +216,8 @@ public class LoopRotarySwitchView extends RelativeLayout {
         return new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                angle+=Math.cos(Math.toRadians(loopRotationZ))*(distanceX/4)
-                        +Math.sin(Math.toRadians(loopRotationZ))*(distanceY/4);
+                angle += Math.cos(Math.toRadians(loopRotationZ)) * (distanceX / 4)
+                        + Math.sin(Math.toRadians(loopRotationZ)) * (distanceY / 4);
                 initView();
                 return true;
             }
@@ -222,21 +226,21 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     public void initView() {
         for (int i = 0; i < views.size(); i++) {
-            double radians=angle+180- i * 360 / size;
-            float x0 = (float)Math.sin(Math.toRadians(radians)) * r;
-            float y0 = (float)Math.cos(Math.toRadians(radians)) * r;
-            float  scale0 = (distance - y0) / (distance + r);//计算子view之间的比例，可以看到distance越大的话 比例越小，也就是大小就相差越小
+            double radians = angle + 180 - i * 360 / size;
+            float x0 = (float) Math.sin(Math.toRadians(radians)) * r;
+            float y0 = (float) Math.cos(Math.toRadians(radians)) * r;
+            float scale0 = (distance - y0) / (distance + r);//计算子view之间的比例，可以看到distance越大的话 比例越小，也就是大小就相差越小
             views.get(i).setScaleX(scale0);//对view进行缩放
             views.get(i).setScaleY(scale0);//对view进行缩放
-            float rotationX_y=(float)Math.sin(Math.toRadians(loopRotationX *Math.cos(Math.toRadians(radians))))*r;
-            float rotationZ_y=-(float)Math.sin(Math.toRadians(-loopRotationZ))*x0;
-            float rotationZ_x=(((float) Math.cos(Math.toRadians(-loopRotationZ))*x0)-x0);
-            views.get(i).setTranslationX( x0 +rotationZ_x);
-            views.get(i).setTranslationY(rotationX_y+rotationZ_y);
+            float rotationX_y = (float) Math.sin(Math.toRadians(loopRotationX * Math.cos(Math.toRadians(radians)))) * r;
+            float rotationZ_y = -(float) Math.sin(Math.toRadians(-loopRotationZ)) * x0;
+            float rotationZ_x = (((float) Math.cos(Math.toRadians(-loopRotationZ)) * x0) - x0);
+            views.get(i).setTranslationX(x0 + rotationZ_x);
+            views.get(i).setTranslationY(rotationX_y + rotationZ_y);
         }
-        List<View> arrayViewList =new ArrayList<>();
+        List<View> arrayViewList = new ArrayList<>();
         arrayViewList.clear();
-        for (int i=0;i<views.size();i++){
+        for (int i = 0; i < views.size(); i++) {
             arrayViewList.add(views.get(i));
         }
         sortList(arrayViewList);
@@ -261,23 +265,23 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 isCanClickListener = true;
                 onItemSelectedListener.selected(selectItem, views.get(selectItem));
             }
-            RAnimation();
+            rAnimation();
         }
     }
 
-    public void RAnimation() {
-        RAnimation(1f, r);
+    public void rAnimation() {
+        rAnimation(1f, r);
     }
 
-    public void RAnimation(boolean fromZeroToLoopR) {
+    public void rAnimation(boolean fromZeroToLoopR) {
         if (fromZeroToLoopR) {
-            RAnimation(1f, LoopR);
+            rAnimation(1f, LoopR);
         } else {
-            RAnimation(LoopR, 1f);
+            rAnimation(LoopR, 1f);
         }
     }
 
-    public void RAnimation(float from, float to) {
+    public void rAnimation(float from, float to) {
         rAnimation = ValueAnimator.ofFloat(from, to);
         rAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -295,7 +299,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
     /**
      * 初始化view
      */
-    public void checkChildView(){
+    public void checkChildView() {
         for (int i = 0; i < views.size(); i++) {//先清空views里边可能存在的view防止重复
             views.remove(i);
         }
@@ -312,7 +316,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
                     //对子view添加点击事件
                     if (position != selectItem) {
                         setSelectItem(position);
-                    }else {
+                    } else {
                         if (isCanClickListener && onItemClickListener != null) {
                             onItemClickListener.onItemClick(position, views.get(position));
                         }
@@ -323,6 +327,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
         }
 
     }
+
     /**
      * 复位
      */
@@ -350,7 +355,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 finall = minvalue;
             }
         }
-        AnimRotationTo(finall, null);
+        animRotationTo(finall, null);
     }
 
 
@@ -360,7 +365,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
      * @param finall
      * @param complete
      */
-    private void AnimRotationTo(float finall, final Runnable complete) {
+    private void animRotationTo(float finall, final Runnable complete) {
         if (angle == finall) {//如果相同说明不需要旋转
             return;
         }
@@ -497,9 +502,10 @@ public class LoopRotarySwitchView extends RelativeLayout {
 
     /**
      * 是否可以点击回调
+     *
      * @param event
      */
-    public void  isCanClickListener(MotionEvent event){
+    public void isCanClickListener(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x = event.getX();
@@ -512,7 +518,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 if (autoRotation) {
-                    loopHandler.sendEmptyMessageDelayed(LoopRotarySwitchViewHandler.msgid,  loopHandler.loopTime);
+                    loopHandler.sendEmptyMessageDelayed(LoopRotarySwitchViewHandler.msgid, loopHandler.loopTime);
                 }
                 if (event.getX() - x > limitX || x - event.getX() > limitX) {
                     isCanClickListener = false;
@@ -522,6 +528,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 break;
         }
     }
+
     /**
      * 获取所有的view
      *
@@ -636,7 +643,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
                 }
             }
 
-            if (size > 0) AnimRotationTo(finall, null);
+            if (size > 0) animRotationTo(finall, null);
         }
     }
 
@@ -648,7 +655,7 @@ public class LoopRotarySwitchView extends RelativeLayout {
     public LoopRotarySwitchView setR(float r) {
         this.r = r;
         distance = multiple * r;
-        return  this;
+        return this;
     }
 
     /**
@@ -733,63 +740,65 @@ public class LoopRotarySwitchView extends RelativeLayout {
         return this;
     }
 
-    public void createXAnimation(int from, int to, boolean start){
-        if(xAnimation!=null)if(xAnimation.isRunning()==true)xAnimation.cancel();
-        xAnimation= ValueAnimator.ofInt(from,to);
+    public void createXAnimation(int from, int to, boolean start) {
+        if (xAnimation != null) if (xAnimation.isRunning() == true) xAnimation.cancel();
+        xAnimation = ValueAnimator.ofInt(from, to);
         xAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                loopRotationX= (Integer) animation.getAnimatedValue();
+                loopRotationX = (Integer) animation.getAnimatedValue();
                 initView();
             }
         });
         xAnimation.setInterpolator(new DecelerateInterpolator());
         xAnimation.setDuration(2000);
-        if(start)xAnimation.start();
+        if (start) xAnimation.start();
     }
 
 
-    public ValueAnimator createZAnimation(int from, int to, boolean start){
-        if(zAnimation!=null)if(zAnimation.isRunning()==true)zAnimation.cancel();
-        zAnimation= ValueAnimator.ofInt(from,to);
+    public ValueAnimator createZAnimation(int from, int to, boolean start) {
+        if (zAnimation != null) if (zAnimation.isRunning() == true) zAnimation.cancel();
+        zAnimation = ValueAnimator.ofInt(from, to);
         zAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                loopRotationZ= (Integer) animation.getAnimatedValue();
+                loopRotationZ = (Integer) animation.getAnimatedValue();
                 initView();
             }
         });
         zAnimation.setInterpolator(new DecelerateInterpolator());
         zAnimation.setDuration(2000);
-        if(start)zAnimation.start();
+        if (start) zAnimation.start();
         return zAnimation;
     }
 
     /**
      * 设置方向
+     *
      * @param mOrientation
      * @return
      */
-    public   LoopRotarySwitchView setOrientation(int mOrientation){
-        setHorizontal(mOrientation==horizontal,false);
+    public LoopRotarySwitchView setOrientation(int mOrientation) {
+        setHorizontal(mOrientation == horizontal, false);
         return this;
     }
-    public LoopRotarySwitchView setHorizontal(boolean horizontal,boolean anim) {
-        if(anim){
-            if(horizontal){
-                createZAnimation(getLoopRotationZ(),0,true);
-            }else{
-                createZAnimation(getLoopRotationZ(),90,true);
+
+    public LoopRotarySwitchView setHorizontal(boolean horizontal, boolean anim) {
+        if (anim) {
+            if (horizontal) {
+                createZAnimation(getLoopRotationZ(), 0, true);
+            } else {
+                createZAnimation(getLoopRotationZ(), 90, true);
             }
-        }else{
-            if(horizontal){
+        } else {
+            if (horizontal) {
                 setLoopRotationZ(0);
-            }else {
+            } else {
                 setLoopRotationZ(90);
             }
             initView();
         }
-        return  this;
+        return this;
     }
 
     public LoopRotarySwitchView setLoopRotationX(int loopRotationX) {

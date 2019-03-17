@@ -1,4 +1,4 @@
-package com.dalong.library;
+package com.slidemove.library;
 
 import org.junit.Test;
 

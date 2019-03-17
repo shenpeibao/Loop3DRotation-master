@@ -1,9 +1,10 @@
-package com.example.looprotaryswitch;
+package com.example.loopswitch;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -11,15 +12,16 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
-import com.dalong.library.listener.OnItemSelectedListener;
-import com.dalong.library.view.LoopRotarySwitchView;
+import com.slidemove.library.listener.OnItemSelectedListener;
+import com.slidemove.library.view.LoopRotarySwitchView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private LoopRotarySwitchView mLoopRotarySwitchView;
 
-    private  int width;
-    private SeekBar mSeekBarX,mSeekBarZ;
+    private int width;
+    private SeekBar mSeekBarX, mSeekBarZ;
     private CheckBox mCheckbox;
     private Switch mSwitchLeftright;
 
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         mSeekBarX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int i = seekBar.getMax() / 2;
+                Log.e(TAG, "i----" + i + "  ,progress----" + progress+ "  ,progress----> " + (progress-i));
                 mLoopRotarySwitchView.setLoopRotationX(progress - seekBar.getMax() / 2);
                 mLoopRotarySwitchView.initView();
             }
@@ -94,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         mSwitchLeftright.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mLoopRotarySwitchView.setAutoScrollDirection(isChecked?LoopRotarySwitchView.AutoScrollDirection.left
-                        :LoopRotarySwitchView.AutoScrollDirection.right);
+                mLoopRotarySwitchView.setAutoScrollDirection(isChecked ? LoopRotarySwitchView.AutoScrollDirection.left
+                        : LoopRotarySwitchView.AutoScrollDirection.right);
             }
         });
     }
@@ -105,30 +109,33 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initLoopRotarySwitchView() {
         mLoopRotarySwitchView
-                .setR(width/3)//设置R的大小
+                .setR(width / 3)//设置R的大小
                 .setAutoRotation(false)//是否自动切换
                 .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)
                 .setAutoRotationTime(1500);//自动切换的时间  单位毫秒
     }
 
     /**
-     *  初始化布局
+     * 初始化布局
      */
     private void initView() {
-        mLoopRotarySwitchView=(LoopRotarySwitchView)findViewById(R.id.mLoopRotarySwitchView);
+        mLoopRotarySwitchView = (LoopRotarySwitchView) findViewById(R.id.mLoopRotarySwitchView);
         mSeekBarX = (SeekBar) findViewById(R.id.seekBarX);
         mSeekBarZ = (SeekBar) findViewById(R.id.seekBarZ);
         mCheckbox = (CheckBox) findViewById(R.id.checkbox);
         mSwitchLeftright = (Switch) findViewById(R.id.switchLeftright);
-        mSeekBarX.setProgress(mSeekBarX.getMax() / 2);
+        int i = mSeekBarX.getMax() / 2;
+        Log.e(TAG, "i----" + i);
+       // mSeekBarX.setProgress(i);
+        int progress = mSeekBarX.getProgress();
+        mLoopRotarySwitchView.setLoopRotationX(progress-i);
+        //    mSeekBarX.setProgress(80);
         mSeekBarZ.setProgress(mSeekBarZ.getMax() / 2);
 
         DisplayMetrics dm = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(dm);
-        width=dm.widthPixels;
+        width = dm.widthPixels;
     }
-
-
 
 }

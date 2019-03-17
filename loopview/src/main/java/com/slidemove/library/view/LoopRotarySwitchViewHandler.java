@@ -1,4 +1,4 @@
-package com.dalong.library.view;
+package com.slidemove.library.view;
 
 import android.os.Handler;
 import android.os.Message;

@@ -1,4 +1,4 @@
-package com.dalong.library.listener;
+package com.slidemove.library.listener;
 
 import android.view.MotionEvent;
 

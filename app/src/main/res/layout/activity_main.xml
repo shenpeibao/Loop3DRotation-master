@@ -9,46 +9,50 @@
     tools:context=".MainActivity">
 
 
-    <com.dalong.library.view.LoopRotarySwitchView
+    <com.slidemove.library.view.LoopRotarySwitchView
         android:id="@+id/mLoopRotarySwitchView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
         app:direction="right">
         <ImageView
+            android:src="@mipmap/image0"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
             android:src="@mipmap/image1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <ImageView
             android:src="@mipmap/image2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <ImageView
             android:src="@mipmap/image3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <ImageView
             android:src="@mipmap/image4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <ImageView
             android:src="@mipmap/image5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <ImageView
             android:src="@mipmap/image6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
         <ImageView
             android:src="@mipmap/image7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+       <!-- <ImageView
             android:src="@mipmap/image8"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
 
-    </com.dalong.library.view.LoopRotarySwitchView>
+    </com.slidemove.library.view.LoopRotarySwitchView>
 
 
 
@@ -70,6 +74,7 @@
             android:id="@+id/seekBarX"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:progress="60"
             android:max="180" />
         <TextView
             android:text="Set Z"
