@@ -7,7 +7,7 @@
 
 
 ![avatar](https://github.com/shenpeibao/Loop3DRotation-master/blob/master/image/shot1.jpg)
-![avatar](https://github.com/shenpeibao/Loop3DRotation-master/image/shot2)
+![avatar](https://github.com/shenpeibao/Loop3DRotation-master/blob/master/image/shot2.jpg)
 
 ##优势
     *1.3d旋转RelativeLayout 
@@ -23,7 +23,7 @@
 在你的项目Gradle 直接引入库文件
 
 
- implementation project(':loopplay')
+      implementation project(':loopplay')
  
 
  
