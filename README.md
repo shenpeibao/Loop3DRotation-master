@@ -1,12 +1,11 @@
 #介绍
-1: Loop3DRotation
-   
 
 ## 效果图
 ![image](https://github.com/shenpeibao/Loop3DRotation-master/blob/master/image/shot1.jpg)
 
 ##优势
-    *1.3d旋转RelativeLayout 
+    
+   *1. 3d旋转
       可以无限循环，自动旋转，停靠的3D旋转布局控件,无需编写代码，直接在布局中加入自己的布局即可。
     控件继承相对布局RelativeLayout直接可以当做布局使用。
    
