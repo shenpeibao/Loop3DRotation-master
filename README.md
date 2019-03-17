@@ -5,7 +5,8 @@
 
 ## 效果图
 
-![image]()
+![image](https://github.com/shenpeibao/Loop3DRotation-master/tree/master/image/shot1)
+![image](https://github.com/shenpeibao/Loop3DRotation-master/tree/master/image/shot2)
 
 ##优势
     *1.3d旋转RelativeLayout 
@@ -18,12 +19,8 @@
 ## 如何使用
 
 
-在你的项目Gradle 添加
-
-     compile 'com.dalong:loopview:1.0.2'
-
-或者直接引入库文件
-
+在你的项目Gradle 直接引入库文件
+ implementation project(':loopplay')
  
 
  
